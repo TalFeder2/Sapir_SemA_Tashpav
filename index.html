@@ -9,137 +9,65 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg: #0f172a;       /* slate-900 */
-      --panel: #111827;    /* gray-900 */
-      --card: #0b1220;     /* deep slate */
-      --text: #e5e7eb;     /* gray-200 */
-      --muted:#94a3b8;     /* slate-400 */
-      --brand:#38bdf8;     /* sky-400 */
-      --brand-2:#22d3ee;   /* cyan-400 */
-      --ok:#22c55e;        /* green-500 */
-      --warn:#fbbf24;      /* amber-400 */
-      --danger:#f43f5e;    /* rose-500 */
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:"Heebo", system-ui, sans-serif; color:var(--text);
-      background: radial-gradient(1200px 800px at 100% -10%, #0b1220 0%, var(--bg) 60%, #0a0f1a 100%);
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:24px}
-    header{
-      background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(56,189,248,.10));
-      border:1px solid rgba(148,163,184,.15);
-      border-radius:20px; padding:22px 20px; margin:18px 0 26px;
-      display:flex; gap:14px; align-items:center; backdrop-filter: blur(6px);
-    }
-    h1{margin:0;font-weight:800;letter-spacing:.4px}
-    .title{font-size:clamp(20px,3.8vw,30px)}
-    .subtitle{color:var(--muted); font-weight:400; font-size:clamp(14px,2.4vw,16px)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-    .card{
-      background: linear-gradient(180deg, rgba(2,6,23,.65), rgba(2,6,23,.85));
-      border:1px solid rgba(148,163,184,.12);
-      border-radius:18px; padding:18px; position:relative; overflow:hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    .card::after{ /* subtle corner glow */
-      content:""; position:absolute; inset:auto auto -40px -40px; width:140px; height:140px; border-radius:999px;
-      background:radial-gradient(60px 60px at 60% 60%, rgba(34,211,238,.25), transparent 70%);
-      pointer-events:none;
-    }
-    .lecturer{font-weight:700; font-size:18px; margin-bottom:4px}
-    .course{color:#dbeafe; font-weight:600; margin:0 0 8px}
-    .time{font-weight:600; color:var(--brand); margin-bottom:6px}
-    .break{color:var(--muted); font-size:14px; margin:2px 0}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      width:100%; padding:12px 14px; border-radius:12px; text-decoration:none; 
-      color:#00131a; font-weight:800; letter-spacing:.3px; background:linear-gradient(90deg,var(--brand),var(--brand-2));
-      border:1px solid rgba(148,163,184,.25);
-      transition: transform .08s ease, filter .2s ease, box-shadow .2s ease;
-      box-shadow: 0 6px 20px rgba(56,189,248,.25);
-      margin-top:8px
-    }
-    .btn:hover{transform: translateY(-1px); filter:brightness(1.05)}
-    .btn:active{transform: translateY(0)}
-    .btn[aria-disabled="true"]{
-      background: linear-gradient(90deg, #475569, #334155); color:#e2e8f0;
-      cursor:not-allowed; box-shadow:none; filter:grayscale(.1); opacity:.85
-    }
-    .small{font-size:12px;color:var(--muted)}
-    footer{opacity:.8; color:var(--muted); text-align:center; font-size:12px; margin:26px 0}
-    .badge{display:inline-block; font-weight:700; font-size:12px; color:#0b1320; background:linear-gradient(90deg,#a7f3d0,#86efac); padding:4px 10px; border-radius:999px; border:1px solid rgba(148,163,184,.25)}
+    body{margin:0;font-family:'Heebo',sans-serif;background:#0f172a;color:#f1f5f9;text-align:center;direction:rtl}
+    header{padding:20px}
+    .logo{max-width:200px;margin:20px auto 10px;display:block}
+    .subheader{font-size:16px;color:#94a3b8;margin-bottom:20px;font-weight:500}
+    h1{margin:10px 0;font-size:26px;font-weight:800}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;max-width:900px;margin:0 auto;padding:20px}
+    .card{background:#1e293b;border-radius:18px;padding:18px;box-shadow:0 10px 25px rgba(0,0,0,.3)}
+    .lecturer{font-weight:700;font-size:18px;margin-bottom:4px}
+    .course{color:#dbeafe;font-weight:600;margin:0 0 8px}
+    .time{font-weight:600;color:#38bdf8;margin-bottom:6px}
+    .break{color:#94a3b8;font-size:14px;margin:2px 0}
+    .btn{display:inline-block;width:90%;padding:10px 12px;border-radius:10px;text-decoration:none;color:#00131a;font-weight:800;background:linear-gradient(90deg,#38bdf8,#22d3ee);transition:transform .1s ease;margin-top:8px}
+    .btn:hover{transform:translateY(-2px)}
+    footer{color:#94a3b8;font-size:13px;margin:30px 0}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div>
-        <div class="badge">סמסטר סתיו תשפ"ד</div>
-        <h1 class="title">מערכת שעות – יום לימודים מקוון</h1>
-        <div class="subtitle">דף זה כולל ארבעה כפתורים לקישור מהיר לזום, לצד פרטי המרצה, הקורס והשעות.</div>
-      </div>
-    </header>
+  <header>
+    <img src="Sapir_new_logo.svg.png" alt="לוגו ספיר" class="logo" />
+    <div class="subheader">תואר שני בתרבות יצירה והפקה</div>
+    <h1>מערכת שעות – יום לימודים מקוון</h1>
+  </header>
 
-    <section class="grid" aria-label="שיעורים וקישורים">
-      <!-- 1: Prof. Liat Shteir-Levni -->
-      <article class="card">
-        <div class="lecturer">פרופ' ליאת שטייר לבני</div>
-        <h2 class="course">דינמיקות של זיכרון: הנצחה והשכחה</h2>
-        <div class="time">9:00 – 10:30</div>
-        <div class="break">הפסקה: 10:30 – 11:00</div>
-        <a class="btn" href="https://oranim-ac-il.zoom.us/j/85646295477?pwd=3lE6MSvAUa9Vkyb04e90UcsMRVUD3T.1" target="_blank" rel="noopener noreferrer" aria-label="פתח קישור לזום – ליאת שטייר לבני">
-          ⤴︎ כניסה לזום
-        </a>
-        <div class="small">מוסד: אורנים</div>
-      </article>
+  <section class="grid">
+    <article class="card">
+      <div class="lecturer">פרופ' ליאת שטייר לבני</div>
+      <div class="course">דינמיקות של זיכרון: הנצחה והשכחה</div>
+      <div class="time">9:00 – 10:30</div>
+      <div class="break">הפסקה: 10:30 – 11:00</div>
+      <a class="btn" href="https://oranim-ac-il.zoom.us/j/85646295477?pwd=3lE6MSvAUa9Vkyb04e90UcsMRVUD3T.1" target="_blank">⤴︎ כניסה לזום</a>
+    </article>
 
-      <!-- 2: Dr. Tal Feder -->
-      <article class="card">
-        <div class="lecturer">ד"ר טל פדר</div>
-        <h2 class="course">מחקר בניהול ומדיניות תרבות</h2>
-        <div class="time">11:00 – 12:30</div>
-        <div class="break">הפסקה: 12:30 – 13:15</div>
-        <a class="btn" href="https://sapir.zoom.us/j/83489586532" target="_blank" rel="noopener noreferrer" aria-label="פתח קישור לזום – טל פדר">
-          ⤴︎ כניסה לזום
-        </a>
-        <div class="small">מוסד: ספיר</div>
-      </article>
+    <article class="card">
+      <div class="lecturer">ד"ר טל פדר</div>
+      <div class="course">מחקר בניהול ומדיניות תרבות</div>
+      <div class="time">11:00 – 12:30</div>
+      <div class="break">הפסקה: 12:30 – 13:15</div>
+      <a class="btn" href="https://sapir.zoom.us/j/83489586532" target="_blank">⤴︎ כניסה לזום</a>
+    </article>
 
-      <!-- 3: Prof. Omri Herzog (link TBD) -->
-      <article class="card">
-        <div class="lecturer">פרופ' עמרי הרצוג</div>
-        <h2 class="course">תרבות בלא נחת</h2>
-        <div class="time">13:15 – 16:15</div>
-        <div class="break">הפסקה: 16:15 – 16:45</div>
-        <a class="btn" aria-disabled="true" tabindex="-1" role="link" aria-label="קישור יישלח בהמשך">
-          ⏳ קישור יישלח בהמשך
-        </a>
-        <div class="small">מוסד: —</div>
-      </article>
+    <article class="card">
+      <div class="lecturer">פרופ' עמרי הרצוג</div>
+      <div class="course">תרבות בלא נחת</div>
+      <div class="time">13:15 – 16:15</div>
+      <div class="break">הפסקה: 16:15 – 16:45</div>
+      <a class="btn" aria-disabled="true">⏳ קישור יישלח בהמשך</a>
+    </article>
 
-      <!-- 4: Ms. Michal Dayan -->
-      <article class="card">
-        <div class="lecturer">גב' מיכל דיין</div>
-        <h2 class="course">המעבדה</h2>
-        <div class="time">16:45 – 19:30</div>
-        <a class="btn" href="https://sapir.zoom.us/my/michaldayan" target="_blank" rel="noopener noreferrer" aria-label="פתח קישור לזום – מיכל דיין">
-          ⤴︎ כניסה לזום
-        </a>
-        <div class="small">מוסד: ספיר</div>
-      </article>
-    </section>
+    <article class="card">
+      <div class="lecturer">גב' מיכל דיין</div>
+      <div class="course">המעבדה</div>
+      <div class="time">16:45 – 19:30</div>
+      <a class="btn" href="https://sapir.zoom.us/my/michaldayan" target="_blank">⤴︎ כניסה לזום</a>
+    </article>
+  </section>
 
-    <footer>
-      <div>© <span id="year"></span> מערכת שעות מקוונת • מוכן לפריסה ב‑GitHub Pages (שמרו קובץ זה כ‑<strong>index.html</strong> בריפו ציבורי).</div>
-    </footer>
-  </div>
-
-  <script>
-    // שנה נוכחית
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <footer>
+    © 2025 מערכת שעות מקוונת<br>
+    לוח זמנים סמסטר סתיו - מחזור ו . תאריך עדכון: 26/10/25
+  </footer>
 </body>
 </html>
