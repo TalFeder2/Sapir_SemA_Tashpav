@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>מערכת שעות | סמסטר א' תשפ"ו</title>
+  <meta name="description" content="מערכת שעות לשיעורים פיזיים או מקוונים." />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:'Heebo',sans-serif;background:#2b3a59;color:#f1f5f9;text-align:center;direction:rtl}
+    header{padding:20px}
+    .logo{max-width:200px;margin:20px auto 10px;display:block}
+    .subheader{font-size:16px;color:#94a3b8;margin-bottom:20px;font-weight:500}
+    h1{margin:10px 0;font-size:26px;font-weight:800}
+    .next{max-width:860px;margin:0 auto 8px; padding:14px 18px; border-radius:14px; 
+      background:#3a4a6a; box-shadow:0 8px 18px rgba(0,0,0,.18); text-align:center}
+    .next-title{font-size:20px; font-weight:800; margin:0 0 6px}
+    .next-date{color:#fde68a; font-weight:800}
+    .next-type{margin:0; color:#e2e8f0; font-weight:600}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:800px;margin:0 auto;padding:20px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .card{background:#3a4a6a;border-radius:18px;padding:18px;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+    .lecturer{font-weight:700;font-size:18px;margin-bottom:4px}
+    .course{color:#dbeafe;font-weight:600;margin:0 0 8px}
+    .time{font-weight:600;color:#38bdf8;margin-bottom:6px}
+    .break{color:#cbd5e1;font-size:14px;margin:2px 0}
+    .btn{display:inline-block;width:90%;padding:10px 12px;border-radius:10px;text-decoration:none;color:#00131a;font-weight:800;background:linear-gradient(90deg,#38bdf8,#22d3ee);transition:transform .1s ease;margin-top:8px}
+    .btn:hover{transform:translateY(-2px)}
+    footer{color:#94a3b8;font-size:13px;margin:30px 0}
+    .floating-btn{position:fixed;left:20px;bottom:20px;background:linear-gradient(180deg,#facc15,#f59e0b);color:#1e293b;font-weight:800;border:none;border-radius:12px;padding:14px 18px;width:160px;cursor:pointer;text-decoration:none;box-shadow:0 6px 14px rgba(0,0,0,.35);transition:transform .2s ease,filter .2s ease;display:flex;align-items:center;justify-content:center;text-align:center;}
+    .floating-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+  </style>
+</head>
+<body>
+  <header>
+    <img src="Sapir_new_logo.svg.png" alt="לוגו ספיר" class="logo" />
+    <div class="subheader">תואר שני בתרבות יצירה והפקה</div>
+    <h1>מערכת שעות – יום רביעי | סמסטר א' תשפ"ו</h1>
+  </header>
+
+  <section class="next">
+    <p class="next-title">השיעור הקרוב: יום רביעי <span id="next-date" class="next-date"></span></p>
+    <p id="meeting-type" class="next-type">—</p>
+  </section>
+
+  <section id="schedule" class="grid"></section>
+
+  <a class="floating-btn" href="https://docs.google.com/document/d/1jOxHGHfera6EyqQTHd9Tv0U5_Swjyays/edit" target="_blank">📄 קישור לקובץ לוח זמנים מלא</a>
+
+  <footer>© 2025 מערכת שעות | תאריך עדכון: 3/11/25</footer>
+
+  <script>
+    const heMonths = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
+
+    const schedule = [
+      { day: 5,  month: "נובמבר", type: "לימודים מקוונים" },
+      { day: 12, month: "נובמבר", type: "יום לימודים פיזי" },
+      { day: 19, month: "נובמבר", type: "לימודים מקוונים" },
+      { day: 26, month: "נובמבר", type: "לימודים מקוונים" },
+      { day: 3,  month: "דצמבר",  type: "יום לימודים פיזי" },
+      { day: 10, month: "דצמבר",  type: "לימודים מקוונים" },
+      { day: 17, month: "דצמבר",  type: "לימודים מקוונים" },
+      { day: 24, month: "דצמבר",  type: "יום לימודים פיזי" },
+      { day: 31, month: "דצמבר",  type: "לימודים מקוונים" },
+    ];
+
+    function getNextWednesday(fromDate){
+      const d = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      const WED = 3;
+      let diff = (WED - d.getDay() + 7) % 7;
+      if (diff === 0) diff = 7;
+      d.setDate(d.getDate() + diff);
+      return d;
+    }
+
+    const today = new Date();
+    const nextWed = getNextWednesday(today);
+    const day = nextWed.getDate();
+    const monthName = heMonths[nextWed.getMonth()];
+
+    document.getElementById('next-date').textContent = `${day} ${monthName}`;
+
+    const match = schedule.find(e => e.day === day && e.month === monthName);
+    const type = match ? match.type : "אין מידע זמין בלוח הזמנים";
+    document.getElementById('meeting-type').textContent = type;
+
+    const container = document.getElementById("schedule");
+
+    const physicalClasses = [
+      { lecturer:"פרופ' ליאת שטייר לבני", course:"דינמיקות של זיכרון: הנצחה והשכחה", time:"10:30–12:00", break:"12:00–12:30", room:"חדר 14101" },
+      { lecturer:"ד\"ר טל פדר", course:"מחקר בניהול ומדיניות תרבות", time:"12:30–13:45", break:"13:45–14:15", room:"חדר 14101" },
+      { lecturer:"פרופ' עמרי הרצוג", course:"תרבות בלא נחת", time:"14:15–17:00", break:"17:00–17:30", room:"חדר 14101" },
+      { lecturer:"גב' מיכל דיין", course:"המעבדה", time:"17:30–19:00", room:"חדרים 14102, 14104" }
+    ];
+
+    const zoomClasses = [
+      { lecturer:"פרופ' ליאת שטייר לבני", course:"דינמיקות של זיכרון: הנצחה והשכחה", time:"9:00–10:30", break:"10:30–11:00", zoom:"https://sapir.zoom.us/j/9815624469" },
+      { lecturer:"ד\"ר טל פדר", course:"מחקר בניהול ומדיניות תרבות", time:"11:00–12:30", break:"12:30–13:15", zoom:"https://oranim-ac-il.zoom.us/j/85646295477?pwd=3lE6MSvAUa9Vkyb04e90UcsMRVUD3T.1" },
+      { lecturer:"פרופ' עמרי הרצוג", course:"תרבות בלא נחת", time:"13:15–16:15", break:"16:15–16:45", zoom:"https://sapir.zoom.us/j/83489586532" },
+      { lecturer:"גב' מיכל דיין", course:"המעבדה", time:"16:45–19:30", zoom:"https://sapir.zoom.us/my/michaldayan" }
+    ];
+
+    const selected = type.includes("פיזי") ? physicalClasses : zoomClasses;
+
+    selected.forEach(cls => {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="lecturer">${cls.lecturer}</div>
+        <div class="course">${cls.course}</div>
+        <div class="time">${cls.time}</div>
+        ${cls.room ? `<div class="break">${cls.room}</div>` : ""}
+        ${cls.break ? `<div class="break">הפסקה: ${cls.break}</div>` : ""}
+        ${cls.zoom ? `<a class="btn" href="${cls.zoom}" target="_blank">⤴︎ כניסה לזום</a>` : ""}
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
