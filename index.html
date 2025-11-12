@@ -64,14 +64,13 @@
       { day: 31, month: "דצמבר",  type: "לימודים מקוונים" },
     ];
 
-    function getNextWednesday(fromDate){
-      const d = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
-      const WED = 3;
-      let diff = (WED - d.getDay() + 7) % 7;
-      if (diff === 0) diff = 7;
-      d.setDate(d.getDate() + diff);
-      return d;
-    }
+function getNextWednesday(fromDate){
+      const d = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      const WED = 3;
+      let diff = (WED - d.getDay() + 7) % 7;
+      d.setDate(d.getDate() + diff);
+      return d;
+    }
 
     const today = new Date();
     const nextWed = getNextWednesday(today);
