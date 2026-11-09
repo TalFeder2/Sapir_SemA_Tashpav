@@ -54,6 +54,7 @@
 
     const schedule = [
       { day: 5,  month: "נובמבר", type: "לימודים מקוונים" },
+      { day: 11, month: "נובמבר", type: "לימודים מקוונים" },
       { day: 12, month: "נובמבר", type: "יום לימודים פיזי" },
       { day: 19, month: "נובמבר", type: "לימודים מקוונים" },
       { day: 26, month: "נובמבר", type: "לימודים מקוונים" },
@@ -99,7 +100,20 @@ function getNextWednesday(fromDate){
       { lecturer:"גב' מיכל דיין", course:"המעבדה", time:"16:45–19:30", zoom:"https://sapir.zoom.us/my/michaldayan" }
     ];
 
-    const selected = type.includes("פיזי") ? physicalClasses : zoomClasses;
+    const selected = (type.includes("פיזי") ? physicalClasses : zoomClasses).map(c => ({...c}));
+
+    if (day === 11 && monthName === "נובמבר") {
+      const policyLink = zoomClasses.find(c => c.course.includes("מדיניות"))?.zoom;
+      const labIdx = selected.findIndex(c => c.course === "המעבדה");
+      if (labIdx !== -1 && policyLink) {
+        selected[labIdx] = {
+          lecturer: "נואית וטל",
+          course: "מפגש הכנה לכנס",
+          time: selected[labIdx].time,
+          zoom: policyLink
+        };
+      }
+    }
 
     selected.forEach(cls => {
       const card = document.createElement("article");
