@@ -57,6 +57,7 @@
       { day: 11, month: "נובמבר", type: "לימודים מקוונים" },
       { day: 12, month: "נובמבר", type: "יום לימודים פיזי" },
       { day: 19, month: "נובמבר", type: "לימודים מקוונים" },
+      { day: 25, month: "נובמבר", type: "לימודים מקוונים" },
       { day: 26, month: "נובמבר", type: "לימודים מקוונים" },
       { day: 3,  month: "דצמבר",  type: "יום לימודים פיזי" },
       { day: 10, month: "דצמבר",  type: "לימודים מקוונים" },
@@ -111,6 +112,27 @@ function getNextWednesday(fromDate){
           course: "מפגש הכנה לכנס",
           time: selected[labIdx].time,
           zoom: policyLink
+        };
+      }
+    }
+
+    if (day === 25 && monthName === "נובמבר") {
+      const talIdx = selected.findIndex(c => c.lecturer && c.lecturer.includes("טל פדר"));
+      if (talIdx !== -1) {
+        selected[talIdx].time = "11:00–12:15";
+        selected[talIdx].break = "12:15–13:00";
+      }
+      const omriIdx = selected.findIndex(c => c.lecturer && c.lecturer.includes("עמרי"));
+      if (omriIdx !== -1) {
+        selected[omriIdx].time = "13:00–16:00";
+        selected[omriIdx].break = "16:00–16:30";
+      }
+      const labIdx = selected.findIndex(c => c.course === "המעבדה");
+      if (labIdx !== -1) {
+        selected[labIdx] = {
+          lecturer: "",
+          course: "אירוע מיפויים",
+          time: "16:30–18:30"
         };
       }
     }
